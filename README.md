@@ -11,7 +11,6 @@ Ce projet a pour but de :
 
 - Calculer un score de compatibilité entre un talent et une entreprise
 - Classer les talents du plus pertinent au moins pertinent
-- Simuler un système de recrutement simple (type ATS)
 
 👉 L’objectif principal est de **ship vite une solution fonctionnelle et lisible**
 
@@ -37,7 +36,6 @@ Le score est calculé selon plusieurs critères :
 
 ### 🎯 Expérience
 - +10 points si le talent a une expérience ≥ requise
-- Sinon pénalité proportionnelle
 
 ### 📍 Localisation
 - +5 points si même ville
@@ -53,10 +51,18 @@ Le score est calculé selon plusieurs critères :
 
 ```bash
 git clone <repo-url>
+
 cd Build_Talio
 
 2. Lancer le programme
+
 python main.py
+
+OR
+
+python3 main.py
+
+
 🧪 Exemple de sortie
 🏢 Company: TechCorp
 ========================================
@@ -75,6 +81,8 @@ python main.py
    ⭐ Score: 5
    🔧 Skills match: []
 ----------------------------------------
+
+
 📊 Exemple de données
 👨‍💻 Talent
 {
@@ -88,29 +96,30 @@ python main.py
 {
   "name": "TechCorp",
   "skills": ["python", "api", "docker"],
-  "experience": 3,
-  "location": "Casablanca",
-  "role": "backend"
-}
--
-📊 Exemple de données
-👨‍💻 Talent
-{
-  "name": "Alice",
-  "skills": ["python", "django", "api"],
   "experience": 3,
   "location": "Casablanca",
   "role": "backend"
 }
 
-🏢 Company
-{
-  "name": "TechCorp",
-  "skills": ["python", "api", "docker"],
-  "experience": 3,
-  "location": "Casablanca",
-  "role": "backend"
-}
+📌 Changer l’entreprise utilisée
+
+Dans ce projet, vous pouvez facilement changer l’entreprise utilisée pour effectuer le matching.
+
+Par défaut, la première entreprise de la liste est sélectionnée :
+
+company = companies[0]
+🔄 Modifier l’entreprise
+
+Pour tester le système avec une autre entreprise, il suffit de changer l’indice :
+
+company = companies[1]  # deuxième entreprise
+
+ou
+
+company = companies[2]  # troisième entreprise
+💡 Remarque
+
+Chaque entreprise contient des critères différents (compétences, rôle, expérience, localisation).
 
 💡 Améliorations possibles
 🔥 API REST avec FastAPI ou Express.js

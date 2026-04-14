@@ -1,53 +1,53 @@
 class Matcher:
     def __init__(self):
         pass
-    # Fonction qui calcule un score de compatibilité entre un talent et une entreprise
-    def match(self, talent, company):
-        
-        
-        score = 0  # Initialisation du score
 
-        # 1. Skills matching (fort poids)
-        # On cherche les compétences communes entre le talent et l'entreprise
+    # Function that calculates a compatibility score between a talent and a company
+    def match(self, talent, company):
+
+        score = 0  # Initialize score
+
+        # 1. Skills matching (high weight)
+        # Find common skills between talent and company
         common_skills = set(talent["skills"]) & set(company["skills"])
-        
-        # On ajoute 3 points pour chaque compétence commune
+
+        # Add 3 points for each common skill
         score += len(common_skills) * 3
 
         # 2. Experience
-        # Calcul de la différence d'expérience entre le talent et le besoin de l'entreprise
+        # Calculate experience difference between talent and company requirement
         diff = talent["experience"] - company["experience"]
-        
+
         if diff >= 0:
-            # Si le talent a autant ou plus d'expérience → bonus
+            # If talent has equal or more experience → bonus
             score += 10
+
         # 3. Location
-        # Vérifie si le talent est dans la même localisation que l'entreprise
+        # Check if talent is in the same location as the company
         if talent["location"] == company["location"]:
-            score += 5  # Bonus si même ville
+            score += 5  # Bonus for same city
 
         # 4. Role match
-        # Vérifie si le rôle correspond (ex: backend, frontend, etc.)
+        # Check if job role matches (e.g. backend, frontend, etc.)
         if talent["role"] == company["role"]:
-            score += 5  # Bonus si même rôle
+            score += 5  # Bonus for same role
 
-        # Retourne le score final
+        # Return final computed score
         return score
 
-    
-     # Fonction qui classe les talents pour une entreprise donnée
+    # Function that ranks talents for a given company
     def rank(self, company, talents):
-        
-        results = []  # Liste qui va contenir les résultats
+
+        results = []  # List that will store ranked results
 
         for t in talents:
-            # Pour chaque talent, on calcule son score
+            # Compute score for each talent
             results.append({
-                "talent": t["name"],  # Nom du talent
-                "score": self.match(t, company),  # Score calculé avec la fonction match
+                "talent": t["name"],  # Talent name
+                "score": self.match(t, company),  # Compatibility score
                 "skills_match": list(set(t["skills"]) & set(company["skills"]))  
-                # Liste des compétences communes (utile pour expliquer le match)
+                # Common skills (used to explain the match)
             })
 
-        # On trie les résultats par score décroissant (du meilleur au moins bon)
+        # Sort results by score in descending order (best first)
         return sorted(results, key=lambda x: x["score"], reverse=True)
